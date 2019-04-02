@@ -30,55 +30,60 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
         <div id="app">
           Message: {{ message }}
         </div>
-      
-        <div id="app">
-          <ul id="app">
-            <li v-for="item in stops">
-              {{ item.text }}
-            </li>
-          </ul>
-        </div>
-      -->
+      -->      
      </div>
 
         <div class="jumbotron">
-                <h1 class="display-4">Hello, world!</h1>
+                <h1 class="display-4">Bus Stop Locator</h1>
                 <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
                 <hr class="my-4">
+                <div id="app">
+                    <form>
+                      Number of Stops: <input type="text" name="numberOfStops" v-model="numStops"><br>
+                    </form>
+                    <p>Filtered Stops: 
+                      <ul id="app">
+                          <li v-for="item in filteredStops">
+                            {{ item.id }}
+                          </li>
+                      </ul>
+                    </p>
+                    <!--
+                    <ul id="app">
+                      <li v-for="item in stops">
+                        {{ item.id }}
+                      </li>
+                    </ul>
+                  -->
+                </div>
                 <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
                 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
               </div>
 
 <script>
-/*
-const app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!'
-  }
-})
-
-const app2 = new Vue({
-  el: '#app2',
-  data: {
-    todos: [
-      { text: 'String1' },
-      { text: 'String2' },
-      { text: 'String3' }
-    ]
-  }
-})
-*/
-    const app = new Vue({
-      el: '#app',
-      data: {
-        stops: [
-          //{ text: 'String1' },
-          //{ text: 'String2' },
-          //{ text: 'String3' }
-        ]
+  const app = new Vue({
+    el: '#app',
+    data: {
+      stops: [],
+      numStops: 10,
+    },
+    
+    computed: {
+      filteredStops: function()
+      {
+        return this.stops.slice(0,this.numStops);
       }
-    })
+    },
+
+    created: function () {
+      fetch('https://utils.pauliankline.com/stops.json')
+          .then(function(response) {
+            return response.json();
+          })
+          .then(myJson => this.stops = myJson)
+          .then(() => {if (this.stops.length != 0) console.log("storing stop data success!!")});
+    }
+  })
 </script>
 
 </body>
