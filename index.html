@@ -37,7 +37,7 @@ integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw
                       Number of stops to show: <input type="text" name="numberOfStops" v-model="numStops"><br><br>
                     </form>
                       <div v-for="item in filteredStops">
-                        <div class="card" style="width: 30rem;">
+                        <div class="card">
                             <div class="card-body">
                               <h5 class="card-title">{{item.name}}</h5>
                               <p class="card-text">{{item.description}}
